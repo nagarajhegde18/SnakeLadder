@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake and Ladder Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button id="theme-toggle" style="position: absolute; top: 16px; right: 16px; z-index: 10;" aria-label="Toggle dark or light mode">🌙 Dark Mode</button>
+    <h1>Snake and Ladder</h1>
+    <div id="setup">
+        <label for="num-players">Number of Players:</label>
+        <select id="num-players">
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+        <br><br>
+        <label for="board-size" style="display:none;">Board Size:</label>
+        <select id="board-size" style="display:none;">
+            <option value="10" selected>10 x 10</option>
+        </select>
+        <br><br>
+        <div id="player-names-section"></div>
+        <div id="stats-panel" role="region" aria-label="Player statistics" style="margin-bottom: 12px;"></div>
+        <div id="custom-board">
+            <h3>Customize Snakes</h3>
+            <input type="number" id="snake-head" min="2" max="99" placeholder="Head (from)">
+            <input type="number" id="snake-tail" min="1" max="98" placeholder="Tail (to)">
+            <button id="add-snake">Add Snake</button>
+            <ul id="snake-list"></ul>
+            <h3>Customize Ladders</h3>
+            <input type="number" id="ladder-bottom" min="1" max="99" placeholder="Bottom (from)">
+            <input type="number" id="ladder-top" min="2" max="100" placeholder="Top (to)">
+            <button id="add-ladder">Add Ladder</button>
+            <ul id="ladder-list"></ul>
+            <div style="margin-top:10px;">
+                <button id="save-board" aria-label="Save Board">Save Board</button>
+                <button id="load-board" aria-label="Load Board">Load Board</button>
+                <input type="file" id="load-board-file" accept="application/json" style="display:none;" />
+                <button id="copy-link" aria-label="Copy Shareable Link">Copy Shareable Link</button>
+                <span id="copy-link-msg" style="margin-left:8px;color:#388e3c;font-size:14px;display:none;">Copied!</span>
+            </div>
+        </div>
+        <br>
+        <button id="start-game" aria-label="Start Game">Start Game</button>
+    </div>
+    <div id="game-container" role="main" style="display:none;">
+        <div style="position: relative;">
+            <div id="board" role="region" aria-label="Game board" tabindex="0"></div>
+            <svg id="board-overlay" width="402" height="402" style="position:absolute; top:0; left:0; pointer-events:none;"></svg>
+        </div>
+        <div id="controls" role="region" aria-label="Game controls">
+            <button id="roll-dice" aria-label="Roll Dice">Roll Dice</button>
+            <div id="dice-result">Roll to start!</div>
+            <div id="player-info" role="region" aria-label="Player info"></div>
+            <div id="message" role="region" aria-label="Game message"></div>
+            <button id="restart" style="display:none;" aria-label="Restart Game">Restart Game</button>
+        </div>
+    </div>
+    <audio id="audio-dice" src="sounds/dice.mp3" preload="auto"></audio>
+    <audio id="audio-snake" src="sounds/snake.mp3" preload="auto"></audio>
+    <audio id="audio-ladder" src="sounds/ladder.mp3" preload="auto"></audio>
+    <audio id="audio-win" src="sounds/win.mp3" preload="auto"></audio>
+    <script src="script.js"></script>
+</body>
+</html> 
