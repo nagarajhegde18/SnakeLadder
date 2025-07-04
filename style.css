@@ -372,14 +372,14 @@ button:focus, input:focus, select:focus {
         min-height: 0;
         max-width: 90vw;
         max-height: 90vw;
+        grid-template-columns: repeat(10, 1fr);
+        grid-template-rows: repeat(10, 1fr);
     }
     #board-overlay {
         width: 90vw !important;
         height: 90vw !important;
     }
     .cell {
-        width: calc(90vw / 10);
-        height: calc(90vw / 10);
         font-size: 12px;
     }
     .token {
