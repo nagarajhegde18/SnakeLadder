@@ -64,10 +64,10 @@ const playerNamesSection = document.getElementById('player-names-section');
 const saveBoardBtn = document.getElementById('save-board');
 const loadBoardBtn = document.getElementById('load-board');
 const loadBoardFile = document.getElementById('load-board-file');
-const themeToggleBtn = document.getElementById('theme-toggle');
 const statsPanel = document.getElementById('stats-panel');
 const copyLinkBtn = document.getElementById('copy-link');
 const copyLinkMsg = document.getElementById('copy-link-msg');
+const newGameBtn = document.getElementById('new-game');
 
 function renderPlayerNameInputs() {
     const numPlayers = parseInt(numPlayersSelect.value, 10);
@@ -309,6 +309,15 @@ function createPlayers(num) {
     renderStatsPanel();
 }
 
+function showEndGameButtons() {
+    restartBtn.style.display = 'inline-block';
+    newGameBtn.style.display = 'inline-block';
+}
+function hideEndGameButtons() {
+    restartBtn.style.display = 'none';
+    newGameBtn.style.display = 'none';
+}
+
 function startGame() {
     const numPlayers = parseInt(numPlayersSelect.value, 10);
     createPlayers(numPlayers);
@@ -321,7 +330,7 @@ function startGame() {
     updatePlayerInfo();
     diceResult.textContent = 'Roll to start!';
     message.textContent = '';
-    restartBtn.style.display = 'none';
+    hideEndGameButtons();
     maybeAutoRollAI();
 }
 
@@ -330,7 +339,19 @@ function restartGame() {
     gameContainer.style.display = 'none';
     diceResult.textContent = 'Roll to start!';
     message.textContent = '';
-    restartBtn.style.display = 'none';
+    hideEndGameButtons();
+    customSnakes = {};
+    customLadders = {};
+    renderSnakeList();
+    renderLadderList();
+}
+
+function newGame() {
+    setupDiv.style.display = 'block';
+    gameContainer.style.display = 'none';
+    diceResult.textContent = 'Roll to start!';
+    message.textContent = '';
+    hideEndGameButtons();
     customSnakes = {};
     customLadders = {};
     renderSnakeList();
@@ -424,7 +445,7 @@ async function movePlayer(roll) {
         diceResult.textContent = `${player.name} wins! 🎉`;
         message.textContent = '';
         gameActive = false;
-        restartBtn.style.display = 'inline-block';
+        showEndGameButtons();
         playSound(audioWin);
         // Update stats for winner
         const stats = getStats();
@@ -457,6 +478,7 @@ function switchTurn() {
 
 rollDiceBtn.addEventListener('click', rollDice);
 restartBtn.addEventListener('click', restartGame);
+newGameBtn.addEventListener('click', newGame);
 startGameBtn.addEventListener('click', startGame);
 
 saveBoardBtn.onclick = () => {
@@ -536,19 +558,6 @@ function tryLoadBoardFromHash() {
     }
 }
 tryLoadBoardFromHash();
-
-function setTheme(isDark) {
-    document.body.classList.toggle('dark-theme', isDark);
-    themeToggleBtn.textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
-    localStorage.setItem('snakeLadderTheme', isDark ? 'dark' : 'light');
-}
-
-themeToggleBtn.onclick = () => {
-    setTheme(!document.body.classList.contains('dark-theme'));
-};
-
-// On load, set theme from localStorage
-setTheme(localStorage.getItem('snakeLadderTheme') === 'dark');
 
 // On load, show setup only
 setupDiv.style.display = 'block';
